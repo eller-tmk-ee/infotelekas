@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .digital {
+            font-family: 'Inconsolata', monospace;
+            font-weight: bold;
+            font-size: 90px;
+            text-align: center;
+            color: #eee;
+            text-shadow: 2px 2px #555;
+
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="digital">
+        <div id="time" onload="showTime()">12:38</div>
+        <!-- vigane, ei värskenda ning puuduvad esinullid (nt 9:12 vs 09:12 ja 14:0 vs 14:00) -->
+    </div>
+</body>
+<script src="js/digital-clock.js"></script>
+</html>

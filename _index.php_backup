@@ -1,0 +1,73 @@
+<?php
+function tee_HTML($lehenimi,$meta,$sisu){
+$luba= 0;
+$ip=$_SERVER['REMOTE_ADDR'];
+include_once "lubatud_ip-d.php";
+foreach ($lubatud as $value=>$v22rtus){
+if ($lubatud[$value]==$ip){
+$luba= 1;
+}
+}
+if ($luba!=1){
+$sisu= "<table><tr><td>Turvakaalutlustel suletud ".$ip."</td></tr></table>";
+}
+$string = '
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+<title>'.$lehenimi.'</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+';
+$string.= $meta;
+$string.= "
+</head>
+
+<body>
+<div class=sisu>
+";
+$string.= $sisu;
+$string.= "
+</div>";
+
+$string.= "
+</body>
+</html>";
+echo $string;
+}
+
+if(isset($_POST['submit']))
+{
+
+$file = $_POST["file"].'.html';
+$url = $_POST["url"];
+
+tee_HTML("Turvakontroll",'<meta http-equiv="refresh" content="3">',"Turvakontroll");
+$content='<html>
+<meta http-equiv="refresh" content="0;url='.$url.'">
+</html>
+';
+
+$myfile = fopen($file, "w") or die("Unable to open file!");
+fwrite($myfile, $content);
+fclose($myfile);
+
+}else{
+$sisu='<form method="post" action="'.$_SERVER['PHP_SELF'].'">
+';
+$sisu.='<select name="file">
+  <option value="ekraan1">ekraan1</option>
+  <option value="ekraan2">ekraan2</option>
+  <option value="ekraan3">ekraan3</option>
+  <option value="ekraan4">ekraan4</option>
+</select>';
+
+$sisu.='<br/>';
+$sisu.='Pikk aadress: <input type="text" name="url"><br>
+<input type="submit" name="submit" value="Salvesta">
+</form>';
+tee_HTML("Suunamine",'',$sisu);
+
+}
+?>
